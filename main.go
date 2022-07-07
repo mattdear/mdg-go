@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/mattdear/mdg/dice"
+	"github.com/mattdear/mdg-go/dice"
 )
 
 func main() {
