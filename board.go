@@ -10,8 +10,8 @@ type Board struct {
 }
 
 func (board *Board) DisplayDice(diceOne string, diceTwo string, diceThree string, diceFour string, diceFive string) string {
-	output := "\n| Roll --------------------------|\n| Dice  | 1  | 2  | 3  | 4  | 5  |\n" +
-		"| Value | " + diceOne + "  | " + diceTwo + "  | " + diceThree + "  | " + diceFour + "  | " + diceFive + "  |\n"
+	output := "\n| Roll ---------------------|\n| Dice  | 1 | 2 | 3 | 4 | 5 |\n" +
+		"| Value | " + diceOne + " | " + diceTwo + " | " + diceThree + " | " + diceFour + " | " + diceFive + " |\n"
 	return output
 }
 
