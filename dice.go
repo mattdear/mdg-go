@@ -3,10 +3,13 @@ package main
 import "math/rand"
 
 type Dice struct {
-    value  int
-    isHold bool
+	value  int
+	isHold bool
 }
 
 func (dice *Dice) Roll() {
-    dice.value = rand.Intn(7)
+	if dice.isHold {
+		return
+	}
+	dice.value = rand.Intn(7)
 }
