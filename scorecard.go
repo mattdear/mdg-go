@@ -48,7 +48,7 @@ func (scorecard *Scorecard) Display() string {
 	return output
 }
 
-func (scorecard *Scorecard) calcTopScore() {
+func (scorecard *Scorecard) calculateTopScore() {
 	scorecard.topScore = scorecard.ones + scorecard.twos + scorecard.threes + scorecard.fours + scorecard.fives + scorecard.sixes
 	if scorecard.topScore >= 63 {
 		scorecard.topBonus = 35
@@ -56,10 +56,10 @@ func (scorecard *Scorecard) calcTopScore() {
 	scorecard.topScore = scorecard.topScore + scorecard.topBonus
 }
 
-func (scorecard *Scorecard) calcBottomScore() {
+func (scorecard *Scorecard) calculateBottomScore() {
 	scorecard.bottomScore = scorecard.twoThreeMatch + scorecard.threeMatch + scorecard.fourMatch + scorecard.fiveMatch + scorecard.threeLine + scorecard.fourLine + scorecard.extras
 }
 
-func (scorecard *Scorecard) calcTotalScore() {
+func (scorecard *Scorecard) calculateTotalScore() {
 	scorecard.totalScore = scorecard.topScore + scorecard.bottomScore
 }

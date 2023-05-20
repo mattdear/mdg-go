@@ -74,6 +74,9 @@ func main() {
 						break
 					}
 				}
+				scorecard.calculateTopScore()
+				scorecard.calculateBottomScore()
+				scorecard.calculateTotalScore()
 				if gameCycles == 12 {
 					clearTerminal()
 					print(scorecard.Display())
