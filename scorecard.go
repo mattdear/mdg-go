@@ -24,7 +24,7 @@ type Scorecard struct {
 
 func (scorecard *Scorecard) Display() string {
 
-	output := "\n|       MDG Scorecard       |\n" +
+	output := "|       MDG Scorecard       |\n" +
 		"| Top Section --------------|\n" +
 		"| 1  | Ones             | " + strconv.Itoa(scorecard.ones) + " |\n" +
 		"| 2  | Twos             | " + strconv.Itoa(scorecard.twos) + " |\n" +
