@@ -13,7 +13,6 @@ func main() {
 	var scorecard Scorecard
 	var dice1, dice2, dice3, dice4, dice5 Dice
 	gameLoop := true
-	setupGame(board, scorecard, dice1, dice2, dice3, dice4, dice5)
 	for {
 		clearTerminal()
 		println("*------- Welcome to MDG lets play! -------*\n\nPlease select one of the following options:\n1 - New Game\n2 - Exit\n")
@@ -104,34 +103,6 @@ func getUserInput() int {
 	var userInput int
 	fmt.Scanln(&userInput)
 	return userInput
-}
-
-func setupGame(board Board, scorecard Scorecard, dice1 Dice, dice2 Dice, dice3 Dice, dice4 Dice, dice5 Dice) {
-	board = Board{0, 0, 0, 0, 0, 0}
-	scorecard = Scorecard{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	dice1 = Dice{0, false}
-	dice2 = Dice{0, false}
-	dice3 = Dice{0, false}
-	dice4 = Dice{0, false}
-	dice5 = Dice{0, false}
-}
-
-func rollDice(dice1 Dice, dice2 Dice, dice3 Dice, dice4 Dice, dice5 Dice) {
-	if !dice1.isHold {
-		dice1.Roll()
-	}
-	if !dice2.isHold {
-		dice2.Roll()
-	}
-	if !dice3.isHold {
-		dice3.Roll()
-	}
-	if !dice4.isHold {
-		dice4.Roll()
-	}
-	if !dice5.isHold {
-		dice5.Roll()
-	}
 }
 
 func clearTerminal() {
