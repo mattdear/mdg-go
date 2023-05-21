@@ -33,13 +33,11 @@ func main() {
 					print("\nRound " + strconv.Itoa(gameCycles+1))
 					print("\nRoll " + strconv.Itoa(rollCounter+1) + " of 3")
 					forfeitRollAgain := false
-					if rollCounter != 2 {
-						print("\nRoll again? y(1)/n(2)\n\n")
-						userInput = getUserInput()
-						if userInput == 2 {
-							forfeitRollAgain = true
-						}
-					}
+					dice1.isHold = false
+					dice2.isHold = false
+					dice3.isHold = false
+					dice4.isHold = false
+					dice5.isHold = false
 					if rollCounter == 2 || forfeitRollAgain {
 						print("\nWhere would you like to place this score? (1-13)\n\n")
 						userInput = getUserInput()
@@ -73,7 +71,46 @@ func main() {
 						}
 						break
 					}
+					if rollCounter != 2 {
+						print("\nRoll again? y(1)/n(2)\n\n")
+						userInput = getUserInput()
+						if userInput == 2 {
+							forfeitRollAgain = true
+						}
+						if !forfeitRollAgain {
+							print("\nHold dice 1? y(1)/n(2)\n\n")
+							userInput = getUserInput()
+							if userInput == 1 {
+								dice1.isHold = true
+							}
+							print("\nHold dice 2? y(1)/n(2)\n\n")
+							userInput = getUserInput()
+							if userInput == 1 {
+								dice2.isHold = true
+							}
+							print("\nHold dice 3? y(1)/n(2)\n\n")
+							userInput = getUserInput()
+							if userInput == 1 {
+								dice3.isHold = true
+							}
+							print("\nHold dice 4? y(1)/n(2)\n\n")
+							userInput = getUserInput()
+							if userInput == 1 {
+								dice4.isHold = true
+							}
+							print("\nHold dice 5? y(1)/n(2)\n\n")
+							userInput = getUserInput()
+							if userInput == 1 {
+								dice5.isHold = true
+							}
+						}
+					}
 				}
+				dice1.isHold = false
+				dice2.isHold = false
+				dice3.isHold = false
+				dice4.isHold = false
+				dice5.isHold = false
 				scorecard.calculateTopScore()
 				scorecard.calculateBottomScore()
 				scorecard.calculateTotalScore()
@@ -113,98 +150,6 @@ func clearTerminal() {
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }
-
-//                         //Dice hold setting
-//                         } else if (userInputString.equals("Y")) {
-//                             boolean isHoldDiceOne = true;
-//                             do {
-//                                 System.out.println("Hold Dice 1? y/n");
-//                                 userInputString = stringScanner.nextLine().toUpperCase().trim();
-//                                 if (userInputString.equals("Y")) {
-//                                     d1.setHold(true);
-//                                     isHoldDiceOne = false;
-//                                 } else if (userInputString.equals("N")) {
-//                                     d1.setHold(false);
-//                                     isHoldDiceOne = false;
-//                                 } else {
-//                                     System.out.println("\nInput invalid, please try again.\n\n");
-//                                 }
-//                             } while (isHoldDiceOne == true);
-//                             boolean isHoldDiceTwo = true;
-//                             do {
-//                                 System.out.println("Hold Dice 2? y/n");
-//                                 userInputString = stringScanner.nextLine().toUpperCase().trim();
-//                                 if (userInputString.equals("Y")) {
-//                                     d2.setHold(true);
-//                                     isHoldDiceTwo = false;
-//                                 } else if (userInputString.equals("N")) {
-//                                     d2.setHold(false);
-//                                     isHoldDiceTwo = false;
-//                                 } else {
-//                                     System.out.println("\nInput invalid, please try again.\n\n");
-//                                 }
-//                             } while (isHoldDiceTwo == true);
-//                             boolean isHoldDiceThree = true;
-//                             do {
-//                                 System.out.println("Hold Dice 3? y/n");
-//                                 userInputString = stringScanner.nextLine().toUpperCase().trim();
-//                                 if (userInputString.equals("Y")) {
-//                                     d3.setHold(true);
-//                                     isHoldDiceThree = false;
-//                                 } else if (userInputString.equals("N")) {
-//                                     d3.setHold(false);
-//                                     isHoldDiceThree = false;
-//                                 } else {
-//                                     System.out.println("\nInput invalid, please try again.\n\n");
-//                                 }
-//                             } while (isHoldDiceThree == true);
-//                             boolean isHoldDiceFour = true;
-//                             do {
-//                                 System.out.println("Hold Dice 4? y/n");
-//                                 userInputString = stringScanner.nextLine().toUpperCase().trim();
-//                                 if (userInputString.equals("Y")) {
-// } else if (userInputString.equals("N")) {
-// 	d4.setHold(false);
-// 	isHoldDiceFour = false;
-// } else {
-// 	System.out.println("\nInput invalid, please try again.\n\n");
-// }
-// } while (isHoldDiceFour == true);
-// boolean isHoldDiceFive = true;
-// do {
-// System.out.println("Hold Dice 5? y/n");
-// userInputString = stringScanner.nextLine().toUpperCase().trim();
-// if (userInputString.equals("Y")) {
-// 	d5.setHold(true);
-// 	isHoldDiceFive = false;
-// } else if (userInputString.equals("N")) {
-// 	d5.setHold(false);
-// 	isHoldDiceFive = false;
-// } else {
-// 	System.out.println("\nInput invalid, please try again.\n\n");
-// }
-// } while (isHoldDiceFive == true);
-
-// //Dice roll
-// if (!d1.getHold()) {
-// d1.roll();
-// }
-// if (!d2.getHold()) {
-// d2.roll();
-// }
-// if (!d3.getHold()) {
-// d3.roll();
-// }
-// if (!d4.getHold()) {
-// d4.roll();
-// }
-// if (!d5.getHold()) {
-// d5.roll();
-// }
-// } else {
-// System.out.println("\nInput invalid, please try again.\n\n");
-// }
-// }
 
 // //Setting active dice
 // board.activeDice(board, d1.getValue());
