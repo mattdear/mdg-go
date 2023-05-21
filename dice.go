@@ -11,5 +11,5 @@ func (dice *Dice) Roll() {
 	if dice.isHold {
 		return
 	}
-	dice.value = rand.Intn(7)
+	dice.value = rand.Intn(6) + 1
 }
