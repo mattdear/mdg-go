@@ -16,8 +16,7 @@ func main() {
 	for {
 		clearTerminal()
 		println("*------- Welcome to MDG lets play! -------*\n\nPlease select one of the following options:\n1 - New Game\n2 - Exit\n")
-		userInput = getUserInput()
-		switch userInput {
+		switch getUserInput() {
 		case 1:
 			gameCycles := 0
 			for {
@@ -40,8 +39,7 @@ func main() {
 					dice5.isHold = false
 					if rollCounter == 2 || forfeitRollAgain {
 						print("\nWhere would you like to place this score? (1-13)\n\n")
-						userInput = getUserInput()
-						switch userInput {
+						switch getUserInput() {
 						case 1:
 							scorecard.ones = 1
 						case 2:
@@ -73,34 +71,28 @@ func main() {
 					}
 					if rollCounter != 2 {
 						print("\nRoll again? y(1)/n(2)\n\n")
-						userInput = getUserInput()
-						if userInput == 2 {
+						if getUserInput() == 2 {
 							forfeitRollAgain = true
 						}
 						if !forfeitRollAgain {
 							print("\nHold dice 1? y(1)/n(2)\n\n")
-							userInput = getUserInput()
-							if userInput == 1 {
+							if getUserInput() == 1 {
 								dice1.isHold = true
 							}
 							print("\nHold dice 2? y(1)/n(2)\n\n")
-							userInput = getUserInput()
-							if userInput == 1 {
+							if getUserInput() == 1 {
 								dice2.isHold = true
 							}
 							print("\nHold dice 3? y(1)/n(2)\n\n")
-							userInput = getUserInput()
-							if userInput == 1 {
+							if getUserInput() == 1 {
 								dice3.isHold = true
 							}
 							print("\nHold dice 4? y(1)/n(2)\n\n")
-							userInput = getUserInput()
-							if userInput == 1 {
+							if getUserInput() == 1 {
 								dice4.isHold = true
 							}
 							print("\nHold dice 5? y(1)/n(2)\n\n")
-							userInput = getUserInput()
-							if userInput == 1 {
+							if getUserInput() == 1 {
 								dice5.isHold = true
 							}
 						}
@@ -119,8 +111,7 @@ func main() {
 					print(scorecard.Display())
 					print("\nGAME OVER")
 					print("\nPress enter to go to the main menu.\n\n")
-					userInput = getUserInput()
-					if userInput != 0 {
+					if getUserInput() != 0 {
 						break
 					}
 					break
