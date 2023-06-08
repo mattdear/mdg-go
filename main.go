@@ -32,13 +32,14 @@ func main() {
 					print(board.DisplayDice(strconv.Itoa(dice1.value), strconv.Itoa(dice2.value), strconv.Itoa(dice3.value), strconv.Itoa(dice4.value), strconv.Itoa(dice5.value)))
 					print("\nRound " + strconv.Itoa(gameCycles+1))
 					print("\nRoll " + strconv.Itoa(rollCounter+1) + " of 3")
-					forfeitRollAgain := false
+//					forfeitRollAgain := false
 					dice1.isHold = false
 					dice2.isHold = false
 					dice3.isHold = false
 					dice4.isHold = false
 					dice5.isHold = false
-					if rollCounter == 2 || forfeitRollAgain {
+					if rollCounter == 2 {
+						tempDiceString = updateDiceArray(dice1.value, dice2.value, dice3.value, dice4.value, dice5.value)
 						print("\nWhere would you like to place this score? (1-13)\n\n")
 						switch getUserInput() {
 						case 1:
@@ -104,7 +105,7 @@ func main() {
 						case 11:
 							tempDiceStringLength := len(tempDiceString)
 							if tempDiceStringLength >= 3 && scorecard.threeLine == 0 {
-								scorecard.threeLine = 30;
+								scorecard.threeLine = 30
 							} else {
 								scorecard.threeLine = 0
 							}
@@ -181,31 +182,33 @@ func main() {
 			break
 		}
 	}
+}
 
-	func clearTerminal() {
-		cmd := exec.Command("clear")
-		cmd.Stdout = os.Stdout
-		cmd.Run()
-	}
+func getUserInput() int {
+	var userInput int
+	fmt.Scanln(&userInput)
+	return userInput
+}
 
-	func getUserInput() int {
-		var userInput int
-		fmt.Scanln(&userInput)
-		return userInput
-	}
+func clearTerminal() {
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
+}
 
-	func updateDiceArray() {
-		diceValueArray := [5]Dice{dice1.value, dice2.value, dice3.value, dice4.value, dice5.value}
-		sort.Ints(diceValueArray)
-		createDiceString(diceValueArray)
-	}
+func updateDiceArray(dice1, dice2, dice3, dice4, dice5 int) string {
+	diceValueArray := []int{dice1, dice2, dice3, dice4, dice5}
+	sort.Ints(diceValueArray)
+	return createDiceString(diceValueArray)
+}
 
-	func createDiceString(diceValueArray) {
-		for diceCounter := 0; diceCounter < 5; diceCounter++ {
-			if diceValueArray[diceCounter] != diceValueArray[diceCounter+1] {
-				tempDiceString = tempDiceString + strconv.Itoa(diceValueArray[diceCounter])
-			}
-			tempDiceString = tempDiceString + diceValueArray[4]
+func createDiceString(diceValueArray []int) string {
+	tempDiceString := ""
+	for diceCounter := 0; diceCounter < 4; diceCounter++ {
+		if diceValueArray[diceCounter] != diceValueArray[diceCounter+1] {
+			tempDiceString = tempDiceString + strconv.Itoa(diceValueArray[diceCounter])
 		}
+		tempDiceString = tempDiceString + strconv.Itoa(diceValueArray[4])
 	}
+	return tempDiceString
 }
