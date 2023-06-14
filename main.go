@@ -9,9 +9,9 @@ import (
 )
 
 //TODO
+//Need to move all user input over to this validated version getUserInputValidated
 //Check Scores
-//Need to add the ability to blank out a line on the scorecard <-- Currently working on this
-//Need to move user input to a function
+//Need to add the ability to blank out a line on the scorecard
 
 func main() {
 	var board Board
@@ -22,13 +22,15 @@ func main() {
 	var userInputLoop, rollAgainLoop, dice1HoldLoop, dice2HoldLoop, dice3HoldLoop, dice4HoldLoop, dice5HoldLoop, blankRowLoop bool
 	forfeitRollAgain := false
 	unusedRows := [13]int{1,1,1,1,1,1,1,1,1,1,1,1,1}
+	mainMenuOptions := []int{1, 2, 3}
+	inputInvalidError := "\nInput invalid, please try again.\n\n"
 	rowError := "\nScore cannot be entered here, please choose another row.\n\n"
 	blankRowError := "\nScore cannot be entered here, would you like to blank the row?.\n\n"
 	oneOrTwoError := "\nPlease enter 1 or 2.\n\n"
 	for {
 		clearTerminal()
 		println("*------- Welcome to MDG lets play! -------*\n\nPlease select one of the following options:\n1 - New Game\n2 - Exit\n")
-		switch getUserInput() {
+		switch getUserInputValidated(mainMenuOptions, inputInvalidError) {
 		case 1:
 			gameCycles := 0
 			for {
@@ -349,25 +351,26 @@ func getUserInput() int {
 	return userInput
 }
 
-//func getUserInputValidated() int {
-//	var userInput int
-//	userInputLoop := true
-//	for {
-//		_, err := fmt.Scanln(&userInput)
-//		if err != nil {
-//			return 0
-//		}
-//		if userOptions userInput = {
-//			userInputLoop = false
-//		} else {
-//			print("Input is invalid, please try again")
-//		}
-//		if !userInputLoop {
-//			break
-//		}
-//	}
-//	return userInput
-//}
+func getUserInputValidated(userOptions[]int, errorMessage string) int {
+	var userInput int
+	userInputLoop := true
+	for {
+		_, err := fmt.Scanln(&userInput)
+		if err != nil {
+			return 0
+		}
+		for _, option := range userOptions{
+			if option == userInput {
+				userInputLoop = false
+			}
+		}
+		if !userInputLoop {
+			break
+		}
+		println(errorMessage)
+	}
+	return userInput
+}
 
 func clearTerminal() {
 	cmd := exec.Command("clear")
