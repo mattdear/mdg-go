@@ -11,7 +11,6 @@ import (
 //TODO
 //Check Scores
 //Need to add the ability to blank out a line on the scorecard
-//Need to fix the ability to access some code logic
 
 func main() {
 	var board Board
@@ -19,7 +18,7 @@ func main() {
 	var dice1, dice2, dice3, dice4, dice5 Dice
 	var tempDiceString string
 	gameLoop := true
-	var userInputLoop, rollAgainLoop, dice1HoldLoop, dice2HoldLoop, dice3HoldLoop, dice4HoldLoop, dice5HoldLoop, blankRowLoop bool
+	var userInputLoop, rollAgainLoop, dice1HoldLoop, dice2HoldLoop, dice3HoldLoop, dice4HoldLoop, dice5HoldLoop bool
 	forfeitRollAgain := false
 	unusedRows := [13]int{1,1,1,1,1,1,1,1,1,1,1,1,1}
 	mainMenuOptions := []int{1, 2, 3}
@@ -31,7 +30,6 @@ func main() {
 	inputInvalidError := "\nInput invalid, please try again.\n\n"
 	rowError := "\nScore cannot be entered here, please choose another row.\n\n"
 	blankRowError := "\nScore cannot be entered here, would you like to blank the row?.\n\n"
-	oneOrTwoError := "\nPlease enter 1 or 2.\n\n"
 	for {
 		clearTerminal()
 		println("*------- Welcome to MDG lets play! -------*\n\nPlease select one of the following options:\n1 - New Game\n2 - Exit\n")
@@ -165,7 +163,6 @@ func main() {
 									unusedRows[12] = 0
 								} else {
 									print(blankRowError)
-									blankRowLoop = true
 								}
 							}
 							if !userInputLoop {
@@ -208,6 +205,7 @@ func main() {
 							case 2:
 								forfeitRollAgain = true
 								rollAgainLoop = false
+							}
 							if !rollAgainLoop {
 								break
 							}
