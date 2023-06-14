@@ -8,12 +8,23 @@ import (
 	"strconv"
 )
 
+//TODO
+//Check Scores
+//Need to add the ability to blank out a line on the scorecard <-- Currently working on this
+//Need to move user input to a function
+
 func main() {
 	var board Board
 	var scorecard Scorecard
 	var dice1, dice2, dice3, dice4, dice5 Dice
 	var tempDiceString string
 	gameLoop := true
+	var userInputLoop, rollAgainLoop, dice1HoldLoop, dice2HoldLoop, dice3HoldLoop, dice4HoldLoop, dice5HoldLoop, blankRowLoop bool
+	forfeitRollAgain := false
+	unusedRows := [13]int{1,1,1,1,1,1,1,1,1,1,1,1,1}
+	rowError := "\nScore cannot be entered here, please choose another row.\n\n"
+	blankRowError := "\nScore cannot be entered here, would you like to blank the row?.\n\n"
+	oneOrTwoError := "\nPlease enter 1 or 2.\n\n"
 	for {
 		clearTerminal()
 		println("*------- Welcome to MDG lets play! -------*\n\nPlease select one of the following options:\n1 - New Game\n2 - Exit\n")
@@ -22,6 +33,166 @@ func main() {
 			gameCycles := 0
 			for {
 				for rollCounter := 0; rollCounter <= 2; rollCounter++ {
+					if rollCounter == 2 || forfeitRollAgain {
+						if !forfeitRollAgain {
+							dice1.Roll()
+							dice2.Roll()
+							dice3.Roll()
+							dice4.Roll()
+							dice5.Roll()
+						}
+						tempDiceString = updateDiceArray(dice1.value, dice2.value, dice3.value, dice4.value, dice5.value)
+						print(scorecard.Display())
+						print(board.DisplayDice(strconv.Itoa(dice1.value), strconv.Itoa(dice2.value), strconv.Itoa(dice3.value), strconv.Itoa(dice4.value), strconv.Itoa(dice5.value)))
+						board.activeDice(dice1.value)
+						board.activeDice(dice2.value)
+						board.activeDice(dice3.value)
+						board.activeDice(dice4.value)
+						board.activeDice(dice5.value)
+						print("\nWhere would you like to place this score? (1-13)\n\n")
+						userInputLoop = true
+						for {
+							switch getUserInput() {
+							case 1:
+								if scorecard.ones == 0 && board.activeOnes > 0 && unusedRows[0] == 1 {
+									scorecard.ones = board.activeOnes
+									userInputLoop = false
+									unusedRows[0] = 0
+								} else {
+									print(blankRowError)
+								}
+							case 2:
+								if scorecard.twos == 0 && board.activeTwos > 0 && unusedRows[1] == 1 {
+									scorecard.twos = board.activeTwos * 2
+									userInputLoop = false
+									unusedRows[1] = 0
+								} else {
+									print(blankRowError)
+								}
+							case 3:
+								if scorecard.threes == 0 && board.activeThrees > 0 && unusedRows[2] == 1 {
+									scorecard.threes = board.activeThrees * 3
+									userInputLoop = false
+									unusedRows[2] = 0
+								} else {
+									print(blankRowError)
+								}
+							case 4:
+								if scorecard.fours == 0 && board.activeFours > 0 && unusedRows[3] == 1 {
+									scorecard.fours = board.activeFours * 4
+									userInputLoop = false
+									unusedRows[3] = 0
+								} else {
+									print(blankRowError)
+								}
+							case 5:
+								if scorecard.fives == 0 && board.activeFives > 0 && unusedRows[4] == 1 {
+									scorecard.fives = board.activeFives * 5
+									userInputLoop = false
+									unusedRows[4] = 0
+								} else {
+									print(blankRowError)
+								}
+							case 6:
+								if scorecard.sixes == 0 && board.activeSixes > 0 && unusedRows[5] == 1 {
+									scorecard.sixes = board.activeSixes * 6
+									userInputLoop = false
+									unusedRows[5] = 0
+								} else {
+									print(blankRowError)
+								}
+							case 7:
+								if (board.activeOnes == 2 || board.activeTwos == 2 || board.activeThrees == 2 || board.activeFours == 2 || board.activeFives == 2 || board.activeSixes == 2) && (board.activeOnes == 3 || board.activeTwos == 3 || board.activeThrees == 3 || board.activeFours == 3 || board.activeFives == 3 || board.activeSixes == 3) && scorecard.twoThreeMatch == 0 && unusedRows[6] == 1 {
+									scorecard.twoThreeMatch = 25
+									userInputLoop = false
+									unusedRows[6] = 0
+								} else {
+									print(blankRowError)
+								}
+							case 8:
+								if (board.activeOnes == 3 || board.activeTwos == 3 || board.activeThrees == 3 || board.activeFours == 3 || board.activeFives == 3 || board.activeSixes == 3) && scorecard.threeMatch == 0 && unusedRows[7] == 1 {
+									scorecard.threeMatch = board.diceTotal(dice1.value, dice2.value, dice3.value, dice4.value, dice5.value)
+									userInputLoop = false
+									unusedRows[7] = 0
+								} else {
+									print(blankRowError)
+								}
+							case 9:
+								if (board.activeOnes == 4 || board.activeTwos == 4 || board.activeThrees == 4 || board.activeFours == 4 || board.activeFives == 4 || board.activeSixes == 4) && scorecard.fourMatch == 0 && unusedRows[8] == 1 {
+									scorecard.fourMatch = board.diceTotal(dice1.value, dice2.value, dice3.value, dice4.value, dice5.value)
+									userInputLoop = false
+									unusedRows[8] = 0
+								} else {
+									print(blankRowError)
+								}
+							case 10:
+								if (board.activeOnes == 5 || board.activeTwos == 5 || board.activeThrees == 5 || board.activeFours == 5 || board.activeFives == 5 || board.activeSixes == 5) && scorecard.fiveMatch == 0 && unusedRows[9] == 1 {
+									scorecard.fiveMatch = 50
+									userInputLoop = false
+									unusedRows[9] = 0
+								} else {
+									print(blankRowError)
+								}
+							case 11:
+								tempDiceStringLength := len(tempDiceString)
+								if tempDiceStringLength >= 3 && scorecard.threeLine == 0 && unusedRows[10] == 1 {
+									scorecard.threeLine = 30
+									userInputLoop = false
+									unusedRows[10] = 0
+								} else {
+									print(blankRowError)
+								}
+							case 12:
+								tempDiceStringLength := len(tempDiceString)
+								if tempDiceStringLength >= 4 && scorecard.fourLine == 0 && unusedRows[11] == 1 {
+									scorecard.fourLine = 40
+									userInputLoop = false
+									unusedRows[11] = 0
+								} else {
+									print(blankRowError)
+								}
+							case 13:
+								if scorecard.extras == 0 && unusedRows[12] == 1 {
+									scorecard.extras = board.diceTotal(dice1.value, dice2.value, dice3.value, dice4.value, dice5.value)
+									userInputLoop = false
+									unusedRows[12] = 0
+								} else {
+									print(blankRowError)
+									blankRowLoop = true
+									for {
+										switch getUserInput() {
+										case 1:
+											scorecard.extras = 0
+											unusedRows[12] = 0
+											blankRowLoop = false
+										case 2:
+											blankRowLoop = false
+										default:
+											print(oneOrTwoError)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
+								}
+							default:
+								print(rowError)
+							}
+							if !userInputLoop {
+								break
+							}
+						}
+						scorecard.calculateTopScore()
+						scorecard.calculateBottomScore()
+						scorecard.calculateTotalScore()
+						board.activeOnes = 0
+						board.activeTwos = 0
+						board.activeThrees = 0
+						board.activeFours = 0
+						board.activeFives = 0
+						forfeitRollAgain = false
+						rollCounter = 0
+					}
 					clearTerminal()
 					dice1.Roll()
 					dice2.Roll()
@@ -31,123 +202,108 @@ func main() {
 					print(scorecard.Display())
 					print(board.DisplayDice(strconv.Itoa(dice1.value), strconv.Itoa(dice2.value), strconv.Itoa(dice3.value), strconv.Itoa(dice4.value), strconv.Itoa(dice5.value)))
 					print("\nRound " + strconv.Itoa(gameCycles+1))
-					print("\nRoll " + strconv.Itoa(rollCounter+1) + " of 3")
-//					forfeitRollAgain := false
+					print("\nRoll " + strconv.Itoa(rollCounter+1) + ` of 3`)
 					dice1.isHold = false
 					dice2.isHold = false
 					dice3.isHold = false
 					dice4.isHold = false
 					dice5.isHold = false
-					if rollCounter == 2 {
-						tempDiceString = updateDiceArray(dice1.value, dice2.value, dice3.value, dice4.value, dice5.value)
-						print("\nWhere would you like to place this score? (1-13)\n\n")
-						switch getUserInput() {
-						case 1:
-							if scorecard.ones == 0 && board.activeOnes > 0 {
-								scorecard.ones = board.activeOnes
-							} else {
-								scorecard.ones = 0
+					if rollCounter != 2 {
+						print("\nRoll again? y(1)/n(2)\n\n")
+						rollAgainLoop = true
+						for {
+							switch getUserInput() {
+							case 1:
+								rollAgainLoop = false
+							case 2:
+								forfeitRollAgain = true
+								rollAgainLoop = false
+							default:
+								println("\nPlease enter 1 or 2.\n\n")
 							}
-						case 2:
-							if scorecard.twos == 0 && board.activeTwos > 0 {
-								scorecard.twos = board.activeTwos * 2
-							} else {
-								scorecard.twos = 0
-							}
-						case 3:
-							if scorecard.threes == 0 && board.activeThrees > 0 {
-								scorecard.threes = board.activeThrees * 3
-							} else {
-								scorecard.threes = 0
-							}
-						case 4:
-							if scorecard.fours == 0 && board.activeFours > 0 {
-								scorecard.fours = board.activeFours * 4
-							} else {
-								scorecard.fours = 0
-							}
-						case 5:
-							if scorecard.fives == 0 && board.activeFives > 0 {
-								scorecard.fives = board.activeFives * 5
-							} else {
-								scorecard.fives = 0
-							}
-						case 6:
-							if scorecard.sixes == 0 && board.activeSixes > 0 {
-								scorecard.sixes = board.activeSixes * 6
-							} else {
-								scorecard.sixes = 0
-							}
-						case 7:
-							if (board.activeOnes == 2 || board.activeTwos == 2 || board.activeThrees == 2 || board.activeFours == 2 || board.activeFives == 2 || board.activeSixes == 2) && (board.activeOnes == 3 || board.activeTwos == 3 || board.activeThrees == 3 || board.activeFours == 3 || board.activeFives == 3 || board.activeSixes == 3) && scorecard.twoThreeMatch == 0 {
-								scorecard.twoThreeMatch = 25
-							} else {
-								scorecard.twoThreeMatch = 0
-							}
-						case 8:
-							if (board.activeOnes == 3 || board.activeTwos == 3 || board.activeThrees == 3 || board.activeFours == 3 || board.activeFives == 3 || board.activeSixes == 3) && scorecard.threeMatch == 0 {
-								scorecard.threeMatch = board.diceTotal(dice1.value, dice2.value, dice3.value, dice4.value, dice5.value)
-							} else {
-								scorecard.threeMatch = 0
-							}
-						case 9:
-							if (board.activeOnes == 4 || board.activeTwos == 4 || board.activeThrees == 4 || board.activeFours == 4 || board.activeFives == 4 || board.activeSixes == 4) && scorecard.fourMatch == 0 {
-								scorecard.fourMatch = board.diceTotal(dice1.value, dice2.value, dice3.value, dice4.value, dice5.value)
-							} else {
-								scorecard.fourMatch = 0
-							}
-						case 10:
-							if (board.activeOnes == 5 || board.activeTwos == 5 || board.activeThrees == 5 || board.activeFours == 5 || board.activeFives == 5 || board.activeSixes == 5) && scorecard.fiveMatch == 0 {
-								scorecard.fiveMatch = 50
-							} else {
-								scorecard.fiveMatch = 0
-							}
-						case 11:
-							tempDiceStringLength := len(tempDiceString)
-							if tempDiceStringLength >= 3 && scorecard.threeLine == 0 {
-								scorecard.threeLine = 30
-							} else {
-								scorecard.threeLine = 0
-							}
-						case 12:
-							tempDiceStringLength := len(tempDiceString)
-							if tempDiceStringLength >= 4 && scorecard.fourLine == 0 {
-								scorecard.fourLine = 40
-							} else {
-								scorecard.fourLine = 0
-							}
-						case 13:
-							if scorecard.extras == 0 {
-								scorecard.extras = board.diceTotal(dice1.value, dice2.value, dice3.value, dice4.value, dice5.value)
-							} else {
-								scorecard.extras = 0
+							if !rollAgainLoop {
+								break
 							}
 						}
-						if rollCounter != 2 {
-							print("\nRoll again? y(1)/n(2)\n\n")
-							if getUserInput() == 2 {
-								forfeitRollAgain = true
-							}
-							if !forfeitRollAgain {
-								print("\nHold dice 1? y(1)/n(2)\n\n")
-								if getUserInput() == 1 {
+						if !forfeitRollAgain {
+							print("\nHold dice 1? y(1)/n(2)\n\n")
+							dice1HoldLoop = true
+							for {
+								switch getUserInput() {
+								case 1:
 									dice1.isHold = true
+									dice1HoldLoop = false
+								case 2:
+									dice1HoldLoop = false
+								default:
+									println("\nPlease enter 1 or 2.\n\n")
 								}
-								print("\nHold dice 2? y(1)/n(2)\n\n")
-								if getUserInput() == 1 {
+								if !dice1HoldLoop {
+									break
+								}
+							}
+							print("\nHold dice 2? y(1)/n(2)\n\n")
+							dice2HoldLoop = true
+							for {
+								switch getUserInput() {
+								case 1:
 									dice2.isHold = true
+									dice2HoldLoop = false
+								case 2:
+									dice2HoldLoop = false
+								default:
+									println("\nPlease enter 1 or 2.\n\n")
 								}
-								print("\nHold dice 3? y(1)/n(2)\n\n")
-								if getUserInput() == 1 {
+								if !dice2HoldLoop {
+									break
+								}
+							}
+							print("\nHold dice 3? y(1)/n(2)\n\n")
+							dice3HoldLoop = true
+							for {
+								switch getUserInput() {
+								case 1:
 									dice3.isHold = true
+									dice3HoldLoop = false
+								case 2:
+									dice3HoldLoop = false
+								default:
+									println("\nPlease enter 1 or 2.\n\n")
 								}
-								print("\nHold dice 4? y(1)/n(2)\n\n")
-								if getUserInput() == 1 {
+								if !dice3HoldLoop {
+									break
+								}
+							}
+							print("\nHold dice 4? y(1)/n(2)\n\n")
+							dice4HoldLoop = true
+							for {
+								switch getUserInput() {
+								case 1:
 									dice4.isHold = true
+									dice4HoldLoop = false
+								case 2:
+									dice4HoldLoop = false
+								default:
+									println("\nPlease enter 1 or 2.\n\n")
 								}
-								print("\nHold dice 5? y(1)/n(2)\n\n")
-								if getUserInput() == 1 {
+								if !dice4HoldLoop {
+									break
+								}
+							}
+							print("\nHold dice 5? y(1)/n(2)\n\n")
+							dice5HoldLoop = true
+							for {
+								switch getUserInput() {
+								case 1:
 									dice5.isHold = true
+									dice5HoldLoop = false
+								case 2:
+									dice5HoldLoop = false
+								default:
+									println("\nPlease enter 1 or 2.\n\n")
+								}
+								if !dice5HoldLoop {
+									break
 								}
 							}
 						}
@@ -186,14 +342,40 @@ func main() {
 
 func getUserInput() int {
 	var userInput int
-	fmt.Scanln(&userInput)
+	_, err := fmt.Scanln(&userInput)
+	if err != nil {
+		return 0
+	}
 	return userInput
 }
+
+//func getUserInputValidated() int {
+//	var userInput int
+//	userInputLoop := true
+//	for {
+//		_, err := fmt.Scanln(&userInput)
+//		if err != nil {
+//			return 0
+//		}
+//		if userOptions userInput = {
+//			userInputLoop = false
+//		} else {
+//			print("Input is invalid, please try again")
+//		}
+//		if !userInputLoop {
+//			break
+//		}
+//	}
+//	return userInput
+//}
 
 func clearTerminal() {
 	cmd := exec.Command("clear")
 	cmd.Stdout = os.Stdout
-	cmd.Run()
+	err := cmd.Run()
+	if err != nil {
+		return
+	}
 }
 
 func updateDiceArray(dice1, dice2, dice3, dice4, dice5 int) string {
