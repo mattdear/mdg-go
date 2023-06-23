@@ -27,7 +27,6 @@ func main() {
 	rowError := "\nScore cannot be entered here, please choose another row.\n\n"
 	blankRowError := "\nScore cannot be entered here, would you like to blank the row? y(1)/n(2).\n\n"
 	for {
-		clearTerminal()
 		println("*------- Welcome to MDG lets play! -------*\n\nPlease select one of the following options:\n1 - New Game\n2 - Exit\n")
 		switch getUserInputValidated(mainMenuOptions, inputInvalidError) {
 		case 1:
