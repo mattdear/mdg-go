@@ -10,7 +10,6 @@ import (
 
 //TODO
 //Check Scores
-//Need to add the ability to blank out a line on the scorecard
 
 func main() {
 	var board Board
