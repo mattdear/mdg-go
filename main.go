@@ -8,9 +8,6 @@ import (
 	"strconv"
 )
 
-//TODO
-//Check Scores
-
 func main() {
 	var board Board
 	var scorecard Scorecard
