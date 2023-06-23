@@ -17,7 +17,7 @@ func main() {
 	var userInputLoop, rollAgainLoop, dice1HoldLoop, dice2HoldLoop, dice3HoldLoop, dice4HoldLoop, dice5HoldLoop bool
 	forfeitRollAgain := false
 	unusedRows := [13]int{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-	mainMenuOptions := []int{1, 2, 3}
+	mainMenuOptions := []int{1, 2}
 	scoreboardOptions := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
 	yesNoOptions := []int{1, 2}
 	goToMainMenuOptions := []int{1}
@@ -27,6 +27,7 @@ func main() {
 	rowError := "\nScore cannot be entered here, please choose another row.\n\n"
 	blankRowError := "\nScore cannot be entered here, would you like to blank the row? y(1)/n(2).\n\n"
 	for {
+		clearTerminal()
 		println("*------- Welcome to MDG lets play! -------*\n\nPlease select one of the following options:\n1 - New Game\n2 - Exit\n")
 		switch getUserInputValidated(mainMenuOptions, inputInvalidError) {
 		case 1:
