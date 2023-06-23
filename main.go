@@ -20,16 +20,16 @@ func main() {
 	gameLoop := true
 	var userInputLoop, rollAgainLoop, dice1HoldLoop, dice2HoldLoop, dice3HoldLoop, dice4HoldLoop, dice5HoldLoop bool
 	forfeitRollAgain := false
-	unusedRows := [13]int{1,1,1,1,1,1,1,1,1,1,1,1,1}
+	unusedRows := [13]int{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	mainMenuOptions := []int{1, 2, 3}
-	scoreboardOptions := []int{1,2,3,4,5,6,7,8,9,10,11,12,13}
-	yesNoOptions := []int{1,2}
+	scoreboardOptions := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
+	yesNoOptions := []int{1, 2}
 	goToMainMenuOptions := []int{1}
 	goToMainMenuError := "\nInput invalid, please enter 1.\n\n"
 	yesNoError := "\nInput invalid, please enter 1 or 2.\n\n"
 	inputInvalidError := "\nInput invalid, please try again.\n\n"
 	rowError := "\nScore cannot be entered here, please choose another row.\n\n"
-	blankRowError := "\nScore cannot be entered here, would you like to blank the row?.\n\n"
+	blankRowError := "\nScore cannot be entered here, would you like to blank the row? y(1)/n(2).\n\n"
 	for {
 		clearTerminal()
 		println("*------- Welcome to MDG lets play! -------*\n\nPlease select one of the following options:\n1 - New Game\n2 - Exit\n")
@@ -199,7 +199,7 @@ func main() {
 						print("\nRoll again? y(1)/n(2)\n\n")
 						rollAgainLoop = true
 						for {
-							switch getUserInputValidated(yesNoOptions,yesNoError) {
+							switch getUserInputValidated(yesNoOptions, yesNoError) {
 							case 1:
 								rollAgainLoop = false
 							case 2:
@@ -214,7 +214,7 @@ func main() {
 							print("\nHold dice 1? y(1)/n(2)\n\n")
 							dice1HoldLoop = true
 							for {
-								switch getUserInputValidated(yesNoOptions,yesNoError) {
+								switch getUserInputValidated(yesNoOptions, yesNoError) {
 								case 1:
 									dice1.isHold = true
 									dice1HoldLoop = false
@@ -228,7 +228,7 @@ func main() {
 							print("\nHold dice 2? y(1)/n(2)\n\n")
 							dice2HoldLoop = true
 							for {
-								switch getUserInputValidated(yesNoOptions,yesNoError) {
+								switch getUserInputValidated(yesNoOptions, yesNoError) {
 								case 1:
 									dice2.isHold = true
 									dice2HoldLoop = false
@@ -242,7 +242,7 @@ func main() {
 							print("\nHold dice 3? y(1)/n(2)\n\n")
 							dice3HoldLoop = true
 							for {
-								switch getUserInputValidated(yesNoOptions,yesNoError) {
+								switch getUserInputValidated(yesNoOptions, yesNoError) {
 								case 1:
 									dice3.isHold = true
 									dice3HoldLoop = false
@@ -256,7 +256,7 @@ func main() {
 							print("\nHold dice 4? y(1)/n(2)\n\n")
 							dice4HoldLoop = true
 							for {
-								switch getUserInputValidated(yesNoOptions,yesNoError) {
+								switch getUserInputValidated(yesNoOptions, yesNoError) {
 								case 1:
 									dice4.isHold = true
 									dice4HoldLoop = false
@@ -270,7 +270,7 @@ func main() {
 							print("\nHold dice 5? y(1)/n(2)\n\n")
 							dice5HoldLoop = true
 							for {
-								switch getUserInputValidated(yesNoOptions,yesNoError) {
+								switch getUserInputValidated(yesNoOptions, yesNoError) {
 								case 1:
 									dice5.isHold = true
 									dice5HoldLoop = false
@@ -295,7 +295,7 @@ func main() {
 						clearTerminal()
 						print(scorecard.Display())
 						print("\nGAME OVER")
-						print("\nGo back to the main menumain menu y(1).\n\n")
+						print("\nGo back to the main menu? y(1).\n\n")
 						if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
 							break
 						}
@@ -313,7 +313,7 @@ func main() {
 	}
 }
 
-func getUserInputValidated(userOptions[]int, errorMessage string) int {
+func getUserInputValidated(userOptions []int, errorMessage string) int {
 	var userInput int
 	userInputLoop := true
 	for {
@@ -321,7 +321,7 @@ func getUserInputValidated(userOptions[]int, errorMessage string) int {
 		if err != nil {
 			return 0
 		}
-		for _, option := range userOptions{
+		for _, option := range userOptions {
 			if option == userInput {
 				userInputLoop = false
 			}
