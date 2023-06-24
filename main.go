@@ -76,7 +76,6 @@ func main() {
 												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
 													blankRowLoop = false
 													print(scoreOptions)
-//													break
 												}
 											}
 										case 2:
