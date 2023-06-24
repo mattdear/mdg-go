@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
 	"sort"
 	"strconv"
 )
+
+//finish row blanking function (Currently in for option 1)
 
 func main() {
 	var board Board
@@ -25,9 +25,10 @@ func main() {
 	yesNoError := "\nInput invalid, please enter 1 or 2.\n\n"
 	inputInvalidError := "\nInput invalid, please try again.\n\n"
 	rowError := "\nScore cannot be entered here, please choose another row.\n\n"
-	blankRowError := "\nScore cannot be entered here, would you like to blank the row? y(1)/n(2).\n\n"
+	blankRowError := "\nScore cannot be entered here, would you like to blank the row? y(1)/n(2)\n\n"
+	cannotBlankError := "\nThis row cannot be blanked, go back to row entry menu. y(1)\n\n"
+	scoreOptions := "\nWhere would you like to place this score? (1-13)\n\n"
 	for {
-		clearTerminal()
 		println("*------- Welcome to MDG lets play! -------*\n\nPlease select one of the following options:\n1 - New Game\n2 - Exit\n")
 		switch getUserInputValidated(mainMenuOptions, inputInvalidError) {
 		case 1:
@@ -50,7 +51,7 @@ func main() {
 						board.activeDice(dice3.value)
 						board.activeDice(dice4.value)
 						board.activeDice(dice5.value)
-						print("\nWhere would you like to place this score? (1-13)\n\n")
+						print(scoreOptions)
 						userInputLoop = true
 						for {
 							switch getUserInputValidated(scoreboardOptions, rowError) {
@@ -61,6 +62,31 @@ func main() {
 									unusedRows[0] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[0] == 1 {
+												scorecard.ones = 0
+												unusedRows[0] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+//													break
+												}
+											}
+										case 2:
+											blankRowLoop = false
+											print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							case 2:
 								if scorecard.twos == 0 && board.activeTwos > 0 && unusedRows[1] == 1 {
@@ -176,7 +202,6 @@ func main() {
 						forfeitRollAgain = false
 						rollCounter = 0
 					}
-					clearTerminal()
 					dice1.Roll()
 					dice2.Roll()
 					dice3.Roll()
@@ -279,16 +304,10 @@ func main() {
 							}
 						}
 					}
-					dice1.isHold = false
-					dice2.isHold = false
-					dice3.isHold = false
-					dice4.isHold = false
-					dice5.isHold = false
 					scorecard.calculateTopScore()
 					scorecard.calculateBottomScore()
 					scorecard.calculateTotalScore()
 					if gameCycles == 12 {
-						clearTerminal()
 						print(scorecard.Display())
 						print("\nGAME OVER")
 						print("\nGo back to the main menu? y(1).\n\n")
@@ -328,15 +347,6 @@ func getUserInputValidated(userOptions []int, errorMessage string) int {
 		println(errorMessage)
 	}
 	return userInput
-}
-
-func clearTerminal() {
-	cmd := exec.Command("clear")
-	cmd.Stdout = os.Stdout
-	err := cmd.Run()
-	if err != nil {
-		return
-	}
 }
 
 func updateDiceArray(dice1, dice2, dice3, dice4, dice5 int) string {
