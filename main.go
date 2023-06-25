@@ -6,9 +6,6 @@ import (
 	"strconv"
 )
 
-
-//finish row blanking function (Currently in for option 1)
-
 func main() {
 	var board Board
 	var scorecard Scorecard
