@@ -6,6 +6,7 @@ import (
 	"strconv"
 )
 
+
 //finish row blanking function (Currently in for option 1)
 
 func main() {
@@ -94,6 +95,30 @@ func main() {
 									unusedRows[1] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[1] == 1 {
+												scorecard.twos = 0
+												unusedRows[1] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+												}
+											}
+											case 2:
+												blankRowLoop = false
+												print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							case 3:
 								if scorecard.threes == 0 && board.activeThrees > 0 && unusedRows[2] == 1 {
@@ -102,6 +127,30 @@ func main() {
 									unusedRows[2] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[2] == 1 {
+												scorecard.threes = 0
+												unusedRows[2] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+												}
+											}
+											case 2:
+												blankRowLoop = false
+												print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							case 4:
 								if scorecard.fours == 0 && board.activeFours > 0 && unusedRows[3] == 1 {
@@ -110,6 +159,30 @@ func main() {
 									unusedRows[3] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[3] == 1 {
+												scorecard.fours = 0
+												unusedRows[3] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+												}
+											}
+											case 2:
+												blankRowLoop = false
+												print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							case 5:
 								if scorecard.fives == 0 && board.activeFives > 0 && unusedRows[4] == 1 {
@@ -118,6 +191,30 @@ func main() {
 									unusedRows[4] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[4] == 1 {
+												scorecard.fives = 0
+												unusedRows[4] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+												}
+											}
+											case 2:
+												blankRowLoop = false
+												print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							case 6:
 								if scorecard.sixes == 0 && board.activeSixes > 0 && unusedRows[5] == 1 {
@@ -126,6 +223,30 @@ func main() {
 									unusedRows[5] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[5] == 1 {
+												scorecard.sixes = 0
+												unusedRows[5] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+												}
+											}
+											case 2:
+												blankRowLoop = false
+												print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							case 7:
 								if (board.activeOnes == 2 || board.activeTwos == 2 || board.activeThrees == 2 || board.activeFours == 2 || board.activeFives == 2 || board.activeSixes == 2) && (board.activeOnes == 3 || board.activeTwos == 3 || board.activeThrees == 3 || board.activeFours == 3 || board.activeFives == 3 || board.activeSixes == 3) && scorecard.twoThreeMatch == 0 && unusedRows[6] == 1 {
@@ -134,6 +255,30 @@ func main() {
 									unusedRows[6] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[6] == 1 {
+												scorecard.twoThreeMatch = 0
+												unusedRows[6] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+												}
+											}
+											case 2:
+												blankRowLoop = false
+												print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							case 8:
 								if (board.activeOnes == 3 || board.activeTwos == 3 || board.activeThrees == 3 || board.activeFours == 3 || board.activeFives == 3 || board.activeSixes == 3) && scorecard.threeMatch == 0 && unusedRows[7] == 1 {
@@ -142,6 +287,30 @@ func main() {
 									unusedRows[7] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[7] == 1 {
+												scorecard.threeMatch = 0
+												unusedRows[7] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+												}
+											}
+											case 2:
+												blankRowLoop = false
+												print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							case 9:
 								if (board.activeOnes == 4 || board.activeTwos == 4 || board.activeThrees == 4 || board.activeFours == 4 || board.activeFives == 4 || board.activeSixes == 4) && scorecard.fourMatch == 0 && unusedRows[8] == 1 {
@@ -150,6 +319,30 @@ func main() {
 									unusedRows[8] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[8] == 1 {
+												scorecard.fourMatch = 0
+												unusedRows[8] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+												}
+											}
+											case 2:
+												blankRowLoop = false
+												print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							case 10:
 								if (board.activeOnes == 5 || board.activeTwos == 5 || board.activeThrees == 5 || board.activeFours == 5 || board.activeFives == 5 || board.activeSixes == 5) && scorecard.fiveMatch == 0 && unusedRows[9] == 1 {
@@ -158,6 +351,30 @@ func main() {
 									unusedRows[9] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[9] == 1 {
+												scorecard.fiveMatch = 0
+												unusedRows[9] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+												}
+											}
+											case 2:
+												blankRowLoop = false
+												print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							case 11:
 								tempDiceStringLength := len(tempDiceString)
@@ -167,6 +384,30 @@ func main() {
 									unusedRows[10] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[10] == 1 {
+												scorecard.threeLine = 0
+												unusedRows[10] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+												}
+											}
+											case 2:
+												blankRowLoop = false
+												print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							case 12:
 								tempDiceStringLength := len(tempDiceString)
@@ -176,6 +417,30 @@ func main() {
 									unusedRows[11] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[11] == 1 {
+												scorecard.fourLine = 0
+												unusedRows[11] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+												}
+											}
+											case 2:
+												blankRowLoop = false
+												print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							case 13:
 								if scorecard.extras == 0 && unusedRows[12] == 1 {
@@ -184,6 +449,30 @@ func main() {
 									unusedRows[12] = 0
 								} else {
 									print(blankRowError)
+									blankRowLoop := true
+									for {
+										switch getUserInputValidated(yesNoOptions, yesNoError) {
+										case 1:
+											if unusedRows[12] == 1 {
+												scorecard.extras = 0
+												unusedRows[12] = 0
+												blankRowLoop = false
+												userInputLoop = false
+											} else {
+												print(cannotBlankError)
+												if getUserInputValidated(goToMainMenuOptions, goToMainMenuError) != 0 {
+													blankRowLoop = false
+													print(scoreOptions)
+												}
+											}
+											case 2:
+												blankRowLoop = false
+												print(scoreOptions)
+										}
+										if !blankRowLoop {
+											break
+										}
+									}
 								}
 							}
 							if !userInputLoop {
